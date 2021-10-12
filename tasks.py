@@ -12,6 +12,10 @@ y = breast_cancer.target
 # separation des donnees
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
 
-# task 1
+## task 1 ##
+# generation de l'arbre de decision
 clf = DecisionTreeClassifier(max_leaf_nodes=2)
 clf.fit(x_train, y_train)
+
+# affichage de l'arbre de decision
+DT_to_PNG(clf, breast_cancer.feature_names, "./tree task 1")
