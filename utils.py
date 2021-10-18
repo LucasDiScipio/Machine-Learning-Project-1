@@ -47,6 +47,7 @@ def DT_to_PDF(model, feature_names, file_name):
     """
 
     dot_data = StringIO()
-    tree.export_graphviz(model, out_file=dot_data, feature_names=feature_names)
+    #tree.export_graphviz(model, out_file=dot_data, feature_names=feature_names)
+    tree.export_graphviz(model, out_file=dot_data, feature_names=feature_names, filled=True)
     graph = pydot.graph_from_dot_data(dot_data.getvalue())[0]
     graph.write_pdf("%s.pdf" % file_name)
