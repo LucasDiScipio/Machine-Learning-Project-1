@@ -2,6 +2,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from utils import *
+import matplotlib.pyplot as plt
 
 # import des donnees
 breast_cancer = load_breast_cancer()
@@ -33,12 +34,27 @@ DT_to_PDF(clf2, breast_cancer.feature_names, "./tree task 2")
 # ensembles des arbres de decision
 trees = [None]*29
 trees[0] = clf1
-
 for i in range(3,31):
     
     # generation de l'arbre de decision de profondeur i
     trees[i-2] = DecisionTreeClassifier(max_leaf_nodes=i)
     trees[i-2].fit(x_train, y_train)
 
-# test d'affichage
-DT_to_PNG(trees[1], breast_cancer.feature_names, "./tree task 3")
+# training et testing scores
+training_scores = []
+testing_scores = []
+for tree in trees:
+    training_scores += [tree.score(x_train, y_train)]
+    testing_scores += [tree.score(x_test, y_test)]
+
+# plot des resultats
+max_leaf_nodes = range(2,31)
+cm = 1/2.54
+fig = plt.figure(figsize=(16*cm, 16*cm))
+plt.plot(max_leaf_nodes, training_scores, label="training scores")
+plt.plot(max_leaf_nodes, testing_scores, label="testing score")
+plt.ylabel("leaf nodes")
+plt.xlabel("score")
+plt.legend(loc="upper left")
+plt.savefig("training and testing score.pdf", bbox_inches='tight')
+plt.show()
