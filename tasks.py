@@ -28,3 +28,17 @@ clf2.fit(x_train, y_train)
 # affichage de l'arbre de decision (export au format pdf pour le rapport)
 DT_to_PNG(clf2, breast_cancer.feature_names, "./tree task 2")
 DT_to_PDF(clf2, breast_cancer.feature_names, "./tree task 2")
+
+## task 3 ##
+# ensembles des arbres de decision
+trees = [None]*29
+trees[0] = clf1
+
+for i in range(3,31):
+    
+    # generation de l'arbre de decision de profondeur i
+    trees[i-2] = DecisionTreeClassifier(max_leaf_nodes=i)
+    trees[i-2].fit(x_train, y_train)
+
+# test d'affichage
+DT_to_PNG(trees[1], breast_cancer.feature_names, "./tree task 3")
